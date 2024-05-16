@@ -8,7 +8,7 @@ args[])
 try 
 {
 try (FileWriter fw = new FileWriter("/home/ibrahim/Desktop/khaleel.txt")) {
-    fw.write("Welcome to Java Programming class");
+    fw.write("what is good and bood for health");
 }
 }
 catch(Exception e)

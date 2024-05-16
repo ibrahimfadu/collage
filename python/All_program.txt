@@ -1,0 +1,790 @@
+#stack ADT
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def is_empty(self):
+        return self.items == []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        if not self.is_empty():
+            return self.items.pop()
+        else:
+            return "Stack is empty"
+
+    def peek(self):
+        if not self.is_empty():
+            return self.items[-1]
+        else:
+            return "Stack is empty"
+
+    def size(self):
+        return len(self.items)
+
+    def display(self):
+        return self.items
+
+s = Stack()
+print(s.is_empty())
+print("Push operations")
+s.push(11)
+s.push(12)
+s.push(13)
+print("Size:", s.size())
+print("Stack:", s.display())
+print("Peek:", s.peek())
+print("Pop operations")
+print(s.pop())
+print(s.pop())
+print("Stack:", s.display())
+print("Size:", s.size())
+
+#date abstract data type
+class Date:
+    def __init__(self, a, b, c):
+        self.d = a
+        self.m = b
+        self.y = c
+
+    def day(self):
+        print("Day =", self.d)
+
+    def month(self):
+        print("Month =", self.m)
+
+    def year(self):
+        print("Year =", self.y)
+
+    def month_name(self):
+        months = ["Unknown", "January", "February", "March", "April", "May", "June",
+                  "July", "August", "September", "October", "November", "December"]
+        print("Month Name:", months[self.m])
+
+    def is_leap_year(self):
+        if (self.y % 400 == 0) or (self.y % 4 == 0 and self.y % 100 != 0):
+            print("It is a Leap year")
+        else:
+            print("It is not a Leap year")
+
+d1 = Date(3, 8, 2000)
+d1.day()
+d1.month()
+d1.year()
+d1.month_name()
+d1.is_leap_year()
+
+#bubble sort
+def bubble_sort(a):
+    n = len(a)
+    for i in range(n-1):
+        for j in range(n-1-i):
+            if a[j] > a[j+1]:
+                temp = a[j]
+                a[j] = a[j+1]
+                a[j+1] = temp
+
+xa= [34, 46, 43, 27, 57, 41, 45, 21, 70]
+print("Before sorting:",a)
+bubble_sort(a)
+print("After sorting:",a)
+
+
+#selection sort
+def selection_sort(a):
+    n = len(a)
+    for i in range(n-1):
+        min_index = i
+        for j in range(i+1, n):
+            if a[j] < a[min_index]:
+                min_index = j
+        # Swap the minimum element with the current element
+        a[i], a[min_index] = a[min_index], a[i]
+
+x = [34, 46, 43, 27, 57, 41, 45, 21, 70]
+print("Before sorting:", x)
+selection_sort(x)
+print("After sorting:", x)
+
+
+#linear search
+def linear_search(a, key):
+    n = len(a)
+    for i in range(n):
+        if a[i] == key:
+            return i
+    return -1
+
+a = [13, 24, 35, 46, 57, 68, 79]
+print("The array elements are:", a)
+k = int(input("Enter the key element to search: "))
+i = linear_search(a, k)
+if i == -1:
+    print("Search Unsuccessful")
+else:
+    print("Search Successful, key found at location:", i+1)
+
+
+#insertion sort
+def insertion_sort(a):
+    n = len(a)
+    for i in range(1, n):
+        key = a[i]
+        j = i - 1
+        while j >= 0 and a[j] > key:
+            a[j + 1] = a[j]
+            j -= 1
+        a[j + 1] = key
+
+x = [34, 46, 43, 27, 57, 41, 45, 21, 70]
+print("Before sorting:", x)
+insertion_sort(x)
+print("After sorting:", x)
+
+
+#merge sort
+def mergesort(a, l, h):
+    if l < h:
+        m = l + (h - l) // 2
+        mergesort(a, l, m)
+        mergesort(a, m + 1, h)
+        combine(a, l, m, h)
+
+def combine(a, l, m, h):
+    n1 = m - l + 1
+    n2 = h - m
+    L = [0] * n1
+    R = [0] * n2
+
+    for i in range(n1):
+        L[i] = a[l + i]
+    for j in range(n2):
+        R[j] = a[m + 1 + j]
+
+    i = 0
+    j = 0
+    k = l
+    while i < n1 and j < n2:
+        if L[i] <= R[j]:
+            a[k] = L[i]
+            i += 1
+        else:
+            a[k] = R[j]
+            j += 1
+        k += 1
+
+    while i < n1:
+        a[k] = L[i]
+        i += 1
+        k += 1
+
+    while j < n2:
+        a[k] = R[j]
+        j += 1
+        k += 1
+
+x = [34, 46, 43, 27, 57, 41, 45, 21, 70]
+print("Before sorting:", x)
+mergesort(x, 0, len(x) - 1)
+print("After sorting:", x)
+
+
+#binary search
+def binary_search(a, key):
+    low = 0
+    high = len(a) - 1
+    while low <= high:
+        mid = (high + low) // 2
+        if key == a[mid]:
+            return mid
+        elif key < a[mid]:
+            high = mid - 1
+        else:
+            low = mid + 1
+    return -1
+
+a = [13, 24, 35, 46, 57, 68, 79]
+print("The array elements are:", a)
+k = int(input("Enter the key element to search: "))
+r = binary_search(a, k)
+if r == -1:
+    print("Search Unsuccessful")
+else:
+    print("Search Successful, key found at location:", r+1)
+
+
+#singly linked list
+class Node:
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+
+class SinglyLinkedList:
+    def __init__(self):
+        self.first = None
+
+    def insert_first(self, data):
+        temp = Node(data)
+        temp.next = self.first
+        self.first = temp
+
+    def remove_first(self):
+        if self.first is None:
+            print("List is empty")
+        else:
+            cur = self.first
+            self.first = self.first.next
+            print("The deleted item is", cur.data)
+
+    def display(self):
+        if self.first is None:
+            print("List is empty")
+            return
+        cur = self.first
+        while cur:
+            print(cur.data, end=" ")
+            cur = cur.next
+        print()
+
+    def search(self, item):
+        if self.first is None:
+            print("List is empty")
+            return
+        cur = self.first
+        while cur is not None:
+            if cur.data == item:
+                print("Item is Present in the Linked list")
+                return
+            cur = cur.next
+        print("Item is not present in the Linked list")
+
+# Singly Linked List
+sll = SinglyLinkedList()
+while True:
+    ch = int(input("\nEnter your choice 1-insert 2-delete 3-search 4-display 5-exit: "))
+    if ch == 1:
+        item = input("Enter the element to insert: ")
+        sll.insert_first(item)
+        sll.display()
+    elif ch == 2:
+        sll.remove_first()
+        sll.display()
+    elif ch == 3:
+        item = input("Enter the element to search: ")
+        sll.search(item)
+    elif ch == 4:
+        sll.display()
+    else:
+        break
+
+#doubly linked list single line printing
+class Node:
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+        self.prev = None
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.first = None
+
+    def insert_at_end(self, data):
+        temp = Node(data)
+        if self.first == None:
+            self.first = temp
+        else:
+            cur = self.first
+            while cur.next != None:
+                cur = cur.next
+            cur.next = temp
+            temp.prev = cur
+
+    def delete_first(self):
+        if self.first == None:
+            print("List is empty")
+        elif self.first.next == None:
+            print("The deleted item is", self.first.data)
+            self.first = None
+        else:
+            cur = self.first
+            self.first = self.first.next
+            self.first.prev = None
+            print("The deleted item is", cur.data)
+
+    def display(self):
+        if self.first == None:
+            print("List is empty")
+            return
+        cur = self.first
+        while cur:
+            print(cur.data, end=" ")
+            cur = cur.next
+        print()
+
+    def search(self, item):
+        if self.first == None:
+            print("List is empty")
+            return
+        cur = self.first
+        while cur != None:
+            if cur.data == item:
+                print("Item is present in the Linked list")
+                return
+            else:
+                cur = cur.next
+        print("Item is not present in the Linked list")
+
+# Doubly Linked List
+dll = DoublyLinkedList()
+while True:
+    ch = int(input("\nEnter your choice 1-insert 2-delete 3-search 4-display 5-exit: "))
+    if ch == 1:
+        item = input("Enter the element to insert: ")
+        dll.insert_at_end(item)
+        dll.display()
+    elif ch == 2:
+        dll.delete_first()
+        dll.display()
+    elif ch == 3:
+        item = input("Enter the element to search: ")
+        dll.search(item)
+    elif ch == 4:
+        dll.display()
+    else:
+        break
+
+
+#circular linked list
+class Node: 
+    def __init__(self, data=None): 
+        self.data = data 
+        self.next = None 
+
+class CircularLinkedList: 
+    def __init__(self): 
+        self.first = None 
+
+    def insertAtEnd(self, data): 
+        temp = Node(data) 
+        if self.first is None: 
+            self.first = temp 
+            temp.next = self.first 
+        else: 
+            cur = self.first 
+            while cur.next != self.first: 
+                cur = cur.next 
+            cur.next = temp 
+            temp.next = self.first 
+
+    def deleteAtEnd(self): 
+        if self.first is None: 
+            print("list is empty") 
+        elif self.first.next == self.first: 
+            print("the deleted item is", self.first.data) 
+            self.first = None 
+        else: 
+            cur = self.first 
+            while cur.next.next != self.first: 
+                cur = cur.next 
+            print("the deleted item is", cur.next.data) 
+            cur.next = self.first 
+
+    def display(self): 
+        if self.first is None: 
+            print("list is empty") 
+            return 
+        cur = self.first 
+        while True: 
+            print(cur.data, end=" ") 
+            cur = cur.next 
+            if cur == self.first: 
+                break 
+
+    def search(self, item): 
+        if self.first is None: 
+            print("list is empty") 
+            return 
+        cur = self.first 
+        while True: 
+            if cur.data == item: 
+                print("Item is present in the linked list") 
+                return 
+            cur = cur.next 
+            if cur == self.first: 
+                break 
+        print("Item is not present in the linked list") 
+
+# Circular Linked List 
+cll = CircularLinkedList() 
+while True: 
+    ch = int(input("\nEnter your choice 1-insert 2-delete 3-search 4-display 5-exit: ")) 
+    if ch == 1: 
+        item = input("Enter the element to insert: ") 
+        cll.insertAtEnd(item) 
+        cll.display() 
+    elif ch == 2: 
+        cll.deleteAtEnd() 
+        cll.display() 
+    elif ch == 3: 
+        item = input("Enter the element to search: ") 
+        cll.search(item) 
+    elif ch == 4: 
+        cll.display() 
+    else: 
+        break
+
+
+#stack
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def isEmpty(self):
+        return len(self.items) == 0
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        if self.isEmpty():
+            print("Stack is Empty")
+        else:
+            item = self.items.pop()
+            print("The popped element is:", item)
+
+    def display(self):
+        if self.isEmpty():
+            print("Stack is Empty")
+        else:
+            for i in reversed(self.items):
+                print(i)
+
+    def peek(self):
+        if self.isEmpty():
+            print("Stack is Empty")
+        else:
+            print("Top item is", self.items[-1])
+
+s = Stack()
+while True:
+    print("1: Push 2: Pop 3: Display 4: Peek 5: Exit")
+    choice = int(input("Enter your choice: "))
+    if choice == 1:
+        item = input("Enter the item to push: ")
+        s.push(item)
+    elif choice == 2:
+        s.pop()
+    elif choice == 3:
+        s.display()
+    elif choice == 4:
+        s.peek()
+    else:
+        break
+
+
+#queue
+class Queue:
+    def __init__(self):
+        self.items = []
+
+    def enqueue(self, item):
+        self.items.append(item)
+
+    def dequeue(self):
+        if self.isEmpty():
+            print("Queue is Empty cannot delete")
+        else:
+            item = self.items.pop(0)
+            print("Deleted Item is:", item)
+
+    def display(self):
+        if self.isEmpty():
+            print("Queue is Empty")
+        else:
+            print(self.items)
+
+    def isEmpty(self):
+        return len(self.items) == 0
+
+    def length(self):
+        return len(self.items)
+
+q = Queue()
+while True:
+    print("1: Enqueue 2: Dequeue 3: Display 4: Length 5: Exit")
+    choice = int(input("Enter your choice: "))
+    if choice == 1:
+        item = input("Enter the element: ")
+        q.enqueue(item)
+    elif choice == 2:
+        q.dequeue()
+    elif choice == 3:
+        q.display()
+    elif choice == 4:
+        n = q.length()
+        print("Length of the queue is", n)
+    elif choice == 5:
+        break
+
+
+#priority queue
+class PriorityQueueEntry:
+    def __init__(self, value, priority):
+        self.v = value
+        self.p = priority
+
+class PriorityQueue:
+    def __init__(self):
+        self.items = []
+
+    def isEmpty(self):
+        return len(self.items) == 0
+
+    def length(self):
+        return len(self.items)
+
+    def enqueue(self, value, priority):
+        item = PriorityQueueEntry(value, priority)
+        self.items.append(item)
+
+    def dequeue(self):
+        if self.isEmpty():
+            print("Queue is empty, cannot delete")
+        else:
+            highest = self.items[0].p
+            index = 0
+            for i in range(1, self.length()):
+                if highest > self.items[i].p:
+                    highest = self.items[i].p
+                    index = i
+            del_item = self.items.pop(index)
+            print("Deleted item is:", del_item.v)
+
+    def display(self):
+        if self.isEmpty():
+            print("Queue is empty")
+        else:
+            for x in range(self.length()):
+                print(self.items[x].v, ":", self.items[x].p)
+
+pq = PriorityQueue()
+
+while True:
+    print("1: Enqueue 2: Dequeue 3: Display 4: Length 5: Exit")
+    choice = int(input("Enter your choice: "))
+    if choice == 1:
+        value = input("Enter the item to insert: ")
+        priority = int(input("Enter the priority: "))
+        pq.enqueue(value, priority)
+    elif choice == 2:
+        pq.dequeue()
+    elif choice == 3:
+        pq.display()
+    elif choice == 4:
+        n = pq.length()
+        print("Length of queue is:", n)
+    elif choice == 5:
+        break
+
+
+#binary search tree
+class Node:
+    def __init__(self, value):
+        self.data = value
+        self.left = None
+        self.right = None
+
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, value):
+        newNode = Node(value)
+        if self.root is None:
+            self.root = newNode
+        else:
+            curNode = self.root
+            while curNode is not None:
+                if value < curNode.data:
+                    if curNode.left is None:
+                        curNode.left = newNode
+                        break
+                    else:
+                        curNode = curNode.left
+                else:
+                    if curNode.right is None:
+                        curNode.right = newNode
+                        break
+                    else:
+                        curNode = curNode.right
+
+    def preorder(self, rt):
+        print(rt.data, end=" ")
+        if rt.left is not None:
+            self.preorder(rt.left)
+        if rt.right is not None:
+            self.preorder(rt.right)
+
+    def postorder(self, rt):
+        if rt.left is not None:
+            self.postorder(rt.left)
+        if rt.right is not None:
+            self.postorder(rt.right)
+        print(rt.data, end=" ")
+
+    def inorder(self, rt):
+        if rt.left is not None:
+            self.inorder(rt.left)
+        print(rt.data, end=" ")
+        if rt.right is not None:
+            self.inorder(rt.right)
+
+bst = BinarySearchTree()
+ls = [25, 10, 35, 20, 65, 45, 24]
+for i in ls:
+    bst.insert(i)
+
+print("\nPre-order")
+bst.preorder(bst.root)
+print("\nPost-order")
+bst.postorder(bst.root)
+print("\nIn-order")
+bst.inorder(bst.root)
+
+
+#depth first traversal
+class Stack: 
+    def __init__(self): 
+        self.items = [] 
+        
+    def push(self, value): 
+        self.items.append(value)
+        
+    def pop(self): 
+        if len(self.items) != 0: 
+            return self.items.pop() 
+    
+    def isEmpty(self): 
+        return len(self.items) == 0 
+
+class Node: 
+    def __init__(self, value): 
+        self.data = value 
+        self.left = None 
+        self.right = None 
+
+class BinarySearchTree: 
+    def __init__(self): 
+        self.root = None 
+        
+    def insert(self, value): 
+        newNode = Node(value) 
+        if self.root is None: 
+            self.root = newNode 
+        else: 
+            curNode = self.root 
+            while curNode is not None: 
+                if value < curNode.data: 
+                    if curNode.left is None: 
+                        curNode.left = newNode 
+                        break 
+                    else: 
+                        curNode = curNode.left 
+                else: 
+                    if curNode.right is None: 
+                        curNode.right = newNode 
+                        break 
+                    else: 
+                        curNode = curNode.right 
+                        
+def DFS(root): 
+    s = Stack() 
+    s.push(root) 
+    while not s.isEmpty(): 
+        node = s.pop() 
+        print(node.data, end=" ") 
+        if node.right is not None: 
+            s.push(node.right) 
+        if node.left is not None: 
+            s.push(node.left) 
+
+bst = BinarySearchTree()
+ls = [25, 10, 35, 20, 5, 30, 40] 
+for i in ls: 
+    bst.insert(i) 
+print("Depth First Search Traversal:") 
+DFS(bst.root)
+
+#breadth first traversal
+class Queue:
+    def __init__(self):
+        self.items = []
+
+    def enqueue(self, value):
+        self.items.append(value)
+
+    def dequeue(self):
+        if self.isEmpty():
+            return None
+        return self.items.pop(0)
+
+    def isEmpty(self):
+        return len(self.items) == 0
+
+class Node:
+    def __init__(self, value):
+        self.data = value
+        self.left = None
+        self.right = None
+
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, value):
+        newNode = Node(value)
+        if self.root is None:
+            self.root = newNode
+        else:
+            curNode = self.root
+            while curNode is not None:
+                if value < curNode.data:
+                    if curNode.left is None:
+                        curNode.left = newNode
+                        break
+                    else:
+                        curNode = curNode.left
+                else:
+                    if curNode.right is None:
+                        curNode.right = newNode
+                        break
+                    else:
+                        curNode = curNode.right
+
+def BFS(root):
+    if root is None:
+        return
+
+    q = Queue()
+    q.enqueue(root)
+
+    while not q.isEmpty():
+        node = q.dequeue()
+        print(node.data, end=" ")
+
+        if node.left is not None:
+            q.enqueue(node.left)
+
+        if node.right is not None:
+            q.enqueue(node.right)
+
+bst = BinarySearchTree()
+ls = [25, 10, 35, 20, 5, 30, 40]
+for i in ls:
+    bst.insert(i)
+
+print("Breadth First Search Traversal:")
+BFS(bst.root)
+
